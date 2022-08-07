@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	dsn := "host=ec2-34-235-31-124.compute-1.amazonaws.com user=zhabzzpoprpqzr password=d4a1c36878582ec16046f0c3f1d818598ee5d579f671cc5108b04b3a64893f3c dbname=dm3bpjds7j83v port=5432"
+	dsn := "host=ec2-34-235-31-124.compute-1.amazonaws.com user=zhabzzpoprpqzr password=d4a1c36878582ec16046f0c3f1d818598ee5d579f671cc5108b04b3a64893f3c dbname=dm3bpjds7j83v port=5432 sslmode=require TimeZone=Asia/Jakarta"
 	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	taskRepository := model.NewRepository(db)
