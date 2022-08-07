@@ -24,7 +24,7 @@ func NewRepository(db *gorm.DB) *repository {
 func (r *repository) FetchAll() ([]Task, error) {
 	var tasks []Task
 
-	err := r.db.Order("updated_at desc").Find(&tasks).Error
+	err := r.db.Order("created_at desc").Find(&tasks).Error
 
 	return tasks, err
 }
