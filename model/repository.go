@@ -24,7 +24,7 @@ func NewRepository(db *gorm.DB) *repository {
 func (r *repository) FetchAll() ([]Task, error) {
 	var tasks []Task
 
-	err := r.db.Find(&tasks).Error
+	err := r.db.Order("updated_at desc").Find(&tasks).Error
 
 	return tasks, err
 }
@@ -40,7 +40,10 @@ func (r *repository) FetchByID(ID string) (Task, error) {
 
 func (r *repository) Save(input Input) (Task, error) {
 	var task Task
-	task.Name = input.Name
+	task.Detail = input.Detail
+	task.Assignee = input.Assignee
+	task.Deadline = input.Deadline
+	task.Finished = input.Finished
 	task.ID = uuid.New()
 	err := r.db.Create(&task).Error
 
@@ -53,8 +56,10 @@ func (r *repository) Update(id string, payload Input) (Task, error) {
 
 	r.db.Find(&task, convertedID)
 
-	task.Name = payload.Name
-
+	task.Detail = payload.Detail
+	task.Assignee = payload.Assignee
+	task.Deadline = payload.Deadline
+	task.Finished = payload.Finished
 	err := r.db.Save(&task).Error
 
 	return task, err

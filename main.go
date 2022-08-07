@@ -3,7 +3,7 @@ package main
 import (
 	"task-app-backend/handler"
 	"task-app-backend/model"
-
+	cors "github.com/rs/cors/wrapper/gin"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,14 +17,13 @@ func main() {
 	taskHandler := handler.NewHandler(taskRepository)
 
 	router := gin.Default()
+	router.Use(cors.Default())
 
-	v1 := router.Group("/v1")
-
-	v1.GET("/", taskHandler.FetchAllHandler)
-	v1.POST("/", taskHandler.PostHandler)
-	v1.GET("/:id", taskHandler.FetchByIDHandler)
-	v1.PATCH("/:id", taskHandler.UpdateHandler)
-	v1.DELETE("/:id", taskHandler.DeleteHandler)
+	router.GET("/", taskHandler.FetchAllHandler)
+	router.POST("/", taskHandler.PostHandler)
+	router.GET("/:id", taskHandler.FetchByIDHandler)
+	router.POST("/update/:id", taskHandler.UpdateHandler)
+	router.GET("/delete/:id", taskHandler.DeleteHandler)
 
 	router.Run()
 }

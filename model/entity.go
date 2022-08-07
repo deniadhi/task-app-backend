@@ -8,11 +8,17 @@ import (
 
 type Task struct {
 	ID           uuid.UUID
-  Name         string
+  Detail       string
+  Assignee     string
+	Deadline		 string
+	Finished		 bool
 	CreatedAt    time.Time
   UpdatedAt    time.Time
 }
 
 type Input struct {
-	Name string
+	Detail       string
+  Assignee     string
+	Deadline		 string
+	Finished		 bool
 }
